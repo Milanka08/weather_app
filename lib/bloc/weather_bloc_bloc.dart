@@ -10,14 +10,14 @@ const String API_KEY = 'a6bcef76ae48c19a942f10784c1714a6';
 
 class WeatherBlocBloc extends Bloc<WeatherBlocEvent, WeatherBlocState> {
   WeatherBlocBloc() : super(WeatherBlocInitial()) {
-    on<FetchWeatherEvent>((event, emit) async {
+    on<FetchWeather>((event, emit) async {
       emit(WeatherBlocLoading());
       try {
         WeatherFactory wf = WeatherFactory(API_KEY, language: Language.ENGLISH);
-        Position position = await Geolocator.getCurrentPosition();
+
         Weather weather = await wf.currentWeatherByLocation(
-          position.latitude,
-          position.longitude,
+          event.position.latitude,
+          event.position.longitude,
         );
 
         print(weather);
